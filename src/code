@@ -1,0 +1,74 @@
+
+fn lerp_color(start: (u8, u8, u8), end: (u8, u8, u8), t: f32) -> (u8, u8, u8) {
+    let r = start.0 as f32 + t * (end.0 as f32 - start.0 as f32);
+    let g = start.1 as f32 + t * (end.1 as f32 - start.1 as f32);
+    let b = start.2 as f32 + t * (end.2 as f32 - start.2 as f32);
+    (r as u8, g as u8, b as u8)
+}
+
+fn ansi_color(r: u8, g: u8, b: u8) -> String {
+    format!("\x1b[38;2;{};{};{}m", r, g, b)
+}
+fn remap_char(c: char) -> char {
+    match c {
+        // spazi normali e unicode spazi vuoti → punto
+        ' ' | '\u{2800}' => '.',
+        // lascia intatti newline e tab
+        '\n' | '\t' => c,
+
+        // tutto il resto → 'o'
+        _ => '░',
+    }
+}
+
+fn replace_alnum_with_x(c: char) -> char {
+    if c.is_ascii_alphanumeric() { '⣦' } else { c }
+}
+
+fn mask_words(text: &str, words: &[&str]) -> String {
+    let mut result = text.to_string();
+
+    for &word in words {
+        let mask = "⣿".repeat(word.len());
+        // usa replace per sostituire tutte le occorrenze
+        result = result.replace(word, &mask);
+    }
+
+    result
+}
+fn ansi_bg(r: u8, g: u8, b: u8) -> String {
+    format!("\x1b[48;2;{};{};{}m", r, g, b)
+}
+fn reset_color() -> &'static str {
+    "\x1b[0m"
+}
+fn show_palette() {
+    let colors = [
+        ("Dark0_hard", (29, 32, 33)),
+        ("Dark0", (40, 40, 40)),
+        ("Dark0_soft", (60, 56, 54)),
+        ("Dark1", (66, 60, 54)),
+        ("Dark2", (88, 83, 76)),
+        ("Dark3", (135, 131, 120)),
+        ("Dark4", (146, 131, 116)),
+        ("Light0_hard", (251, 241, 199)),
+        ("Light0", (235, 219, 178)),
+        ("Light0_soft", (250, 235, 190)),
+        ("Light1", (168, 153, 132)),
+        ("Light2", (140, 130, 110)),
+        ("Light3", (146, 131, 116)),
+        ("Light4", (60, 56, 54)),
+        ("Red", (204, 36, 29)),
+        ("Green", (152, 151, 26)),
+        ("Yellow", (215, 153, 33)),
+        ("Blue", (66, 123, 188)),
+        ("Purple", (179, 123, 192)),
+        ("Aqua", (69, 133, 136)),
+        ("Orange", (203, 75, 22)),
+    ];
+
+    for (name, (r, g, b)) in &colors {
+        print!("{}  {}  {} ", ansi_bg(*r, *g, *b), name, reset_color());
+        println!("RGB({}, {}, {})", r, g, b);
+    }
+}
