@@ -1,5 +1,5 @@
 
-***cen***
+***Cen***
 
 Protect your privacy from prying eyes while browsing files in the terminal.
 Sometimes even a filename alone can spark unwanted curiosity.
