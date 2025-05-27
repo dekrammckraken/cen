@@ -1,10 +1,18 @@
 
-Add this function to your .bashrc to manage
-private and guest ls sessions. Just protect your files from prying eyes.
+***cen***
 
+Protect your privacy from prying eyes while browsing files in the terminal.
+Sometimes even a filename alone can spark unwanted curiosity.
 
-gls (guest ls) removes lines containing privacy words,
-while ls just masks them with a censor symbol.
+Highly customizable to hide specific words, including file extensions.
+You can choose the censor character, mask the exact word length, or completely hide lines.
+All by simply adding an alias or function, as shown below.
+
+Add this function to your .bashrc to manage private and guest ls sessions.
+Protect your files from prying eyes.
+
+gls (guest ls) removes lines containing sensitive words,
+while ls masks them with a censor symbol.
 
 ```bash
 
